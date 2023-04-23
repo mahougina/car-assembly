@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Assembly Plants Map</title>
+
+    <!-- css styles w/ leaflet  -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <link rel="stylesheet" href="html.css">
+</head>
+
+<body>
+    <div id="map">
+        <div class="leaflet-control coordinate"></div>
+    </div>
+</body>
+
+</html>
+
+<!-- leaflet js  -->
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+<script src="./data/point.js"></script>
+<script src="./data/line.js"></script>
+<script src="./data/polygon.js"></script>
+
+<script>
+  var locations = [
+    // USA
+    ["GM Arlington", 32.739090, -97.070053],
+    ["GM Bowling Green", 37.009930, -86.365753],
+    ["GM Detroit/Hamtramck", 42.378120, -83.047043],
+    ["GM Fairfax", 39.147339, -94.603844],
+    ["GM Flint Truck", 39.147339, -94.603844],
+    ["GM Fort Wayne", 40.96461440918627, -85.30232223528995],
+    ["GM Lasing Delta Township", 42.69616873251337, -84.6721119197799],
+    ["GM Lansing Grand River", 42.72442852317116, -84.56188699278967],
+    ["GM Orion", 42.716435690597464, -83.26073296580303],
+    ["GM Spring Hill", 35.74283243162045, -86.95780047439524],
+    ["GM Wentzville", 38.81998219845288, -90.81834126432585],
+    ["Ford Flat Rock", 42.10344241467812, -83.2476380216862],
+    ["Ford Chicago", 41.66340499810908, -87.5612256352227],
+    ["Ford Dearborn", 42.30849615759371, -83.15633634865351],
+    ["Ford Kansas City", 39.44223062831907, -94.22856718272065],
+    ["Ford Kentucky", 38.292822445222995, -85.52762009320921],
+    ["Ford Louisville", 38.15694230735495, -85.7287434490443],
+    ["Ford Michigan", 42.27715603657798, -83.40699835050454],
+    ["Ford Ohio", 41.48772695826925, -82.06461217941687],
+    ["Stellantis Belvidere", 42.237012051014936, -88.87069440633138],
+    ["Stellantis Jefferson", 42.37324206346225, -82.9672831774826],
+    ["Stellantis Sterling Heights", 42.5734804845059, -83.03511997746286],
+    ["Stellantis Toledo", 41.688763374694254, -83.50908961987855],
+    ["Stellantis Warren", 42.455738870130034, -83.04089015048704],
+    ["Stellantis Mack Avenue", 42.38678374719396, -82.98119196235405],
+    ["Tesla Factory", 37.4926378358998, -121.94461143560999],
+    ["Tesla Gigafactory", 30.223504969836426, -97.61848328813312],
+    ["Toyota Kentucky", 38.26387438300971, -84.53282334903466],
+    ["Toyota Indiana", 38.29295306545198, -87.56582024903201],
+    ["Toyota Texas", 29.264655532905497, -98.54046558642564],
+    ["Toyota Mississippi", 34.381468298486915, -88.89436097820524],
+    ["Mazda Toyota", 34.68086186591339, -86.84167088199229],
+    ["Honda Marysville", 40.274382670228604, -83.50628085069717],
+    ["Honda East Liberty", 40.328513978795286, -83.55097623535035],
+    ["Honda Alabama", 33.61239390757374, -86.12443211406926],
+    ["Honda Indiana", 39.368951856238034, -85.53200019311083],
+    ["Nissan Smyrna", 35.96070181278131, -86.4888213627309],
+    ["Nissan Canton", 32.57259022383855, -90.07241493602152],
+    ["Subaru Indiana", 40.38050940892446, -86.7894548200037],
+    ["Hyundai Alabama", 32.27981337581734, -86.33033075138611],
+    ["Kia Georgia", 32.910239151447705, -85.13432519366577],
+    ["Volkswagen Chattanooga", 35.07546745986454, -85.13540806465393],
+    ["BMW USA", 34.893345876101634, -82.18115135671935],
+    ["Mercedes-Benz International", 33.18282783831244, -87.26303442247955],
+    ["Mercedes-Benz Vans", 32.96402610135891, -80.10781849366153],
+    ["Hino USA", 39.393191036993784, -81.46894306427316],
+
+    // Canada
+    ["GM CAMI Ingersoll", 43.016076832433114, -80.88633558489396],
+    ["Fiat Chrysler Brampton", 43.75138897033824, -79.71664664851],
+    ["Stellantis Chrysler Windsor", 42.29692561518555, -82.98579266399636],
+    ["Ford Oakville", 43.48262543171026, -79.67092669456214],
+    ["GM Oshawa", 43.871954029286584, -78.86308106383954],
+    ["Honda Alliston", 44.149436199784695, -79.84174454662167],
+    ["Toyota Canada", 43.42009242195012, -80.36960258361765],
+    
+    // Mexico
+    ["BMW San Luis", 22.103454095539718, -100.85929895315947],
+    ["COMPAS Aguascalientes (Mercendes-Benz & Nissan)", 21.731780194188396, -102.29745437058736],
+    ["Ford México", 19.64507947306562, -99.1918377233554],
+    ["Tesla Gigafactory", 25.700174015006954, -100.60003218650898],
+    ["Ford Hermosillo", 29.013242129826676, -110.91796679211],
+    ["Chrysler Toluca", 19.290618243804232, -99.61022585405607],
+    ["GM Ramos Arizpe", 25.510634871549108, -100.9691576481667],
+    ["GM San Luis Potosí", 21.99774878764529, -100.87225751576024],
+    ["Toyota Baja California", 32.50026484559727, -116.71940112253347],
+    ["Toyota Guanajuato", 33.322976630919484, -116.77359800932724],
+    ["Volkswagen México", 19.126213851738427, -98.24499490363485],
+];
+
+var map = L.map('map').setView([38.963124, -101.987541], 4.5);
+mapLink =
+  '<a href="http://openstreetmap.org">OpenStreetMap</a>';
+L.tileLayer(
+  'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; ' + mapLink + ' Contributors',
+    maxZoom: 18,
+  }).addTo(map);
+
+// adding layer to map
+var layer = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
+map.addLayer(layer);
+
+for (var i = 0; i < locations.length; i++) {
+  marker = new L.marker([locations[i][1], locations[i][2]])
+    .bindPopup(locations[i][0])
+    .addTo(map);
+}
+
+</script>
