@@ -9,6 +9,7 @@
     <!-- css styles w/ leaflet  -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
     <link rel="stylesheet" href="html.css">
+    
 </head>
 
 <body>
@@ -21,6 +22,7 @@
 
 <!-- leaflet js  -->
 <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+<script src="scripts/leaflet.label.js"></script>
 <script src="./data/point.js"></script>
 <script src="./data/line.js"></script>
 <script src="./data/polygon.js"></script>
@@ -97,6 +99,54 @@
     ["Toyota Guanajuato", 33.322976630919484, -116.77359800932724],
     ["Volkswagen México", 19.126213851738427, -98.24499490363485],
 ];
+  var cars = [
+    // USA
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+
+  ];
 
 var map = L.map('map').setView([38.963124, -101.987541], 4.5);
 mapLink =
@@ -114,7 +164,8 @@ map.addLayer(layer);
 // adding markers to map
 for (var i = 0; i < locations.length; i++) {
   marker = new L.marker([locations[i][1], locations[i][2]])
-    .bindPopup(locations[i][0])
+    .bindTooltip(locations[i][0])   // plant name
+    .bindPopup(locations[i][0])     // vehicle name
     .addTo(map);
 }
 
