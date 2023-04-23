@@ -9,6 +9,7 @@
     <!-- css styles w/ leaflet  -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
     <link rel="stylesheet" href="html.css">
+    
 </head>
 
 <body>
@@ -21,6 +22,7 @@
 
 <!-- leaflet js  -->
 <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+<script src="scripts/leaflet.label.js"></script>
 <script src="./data/point.js"></script>
 <script src="./data/line.js"></script>
 <script src="./data/polygon.js"></script>
@@ -82,7 +84,8 @@
     ["Ford Oakville", 43.48262543171026, -79.67092669456214],
     ["GM Oshawa", 43.871954029286584, -78.86308106383954],
     ["Honda Alliston", 44.149436199784695, -79.84174454662167],
-    ["Toyota Canada", 43.42009242195012, -80.36960258361765],
+    ["Toyota Cambridge", 43.421694574565066, -80.369740352653455],
+    ["Toyota West", 43.14603412756244, -80.69174277327895],
     
     // Mexico
     ["BMW San Luis", 22.103454095539718, -100.85929895315947],
@@ -97,6 +100,79 @@
     ["Toyota Guanajuato", 33.322976630919484, -116.77359800932724],
     ["Volkswagen México", 19.126213851738427, -98.24499490363485],
 ];
+  var cars = [
+    // USA
+    ["Cadillac Escalade, Cadillac Escalade ESV, Chevrolet Tahoe, Chevrolet Suburban, GMC Yukon, GMC Yukon XL"],
+    ["Chevrolet Corvette"],
+    ["Cruise Origin, GMC Hummer EV"],
+    ["Chevrolet Malibu, Cadillac XT4"],
+    ["Chevrolet Silverado, GMC Sierra"],
+    ["Chevrolet Silverado, GMC Sierra"],
+    ["Buick Enclave, Chevrolet Traverse"],
+    ["Cadillac CT4, Cadillac CT5, Chevrolet Camaro"],
+    ["Chevrolet Bolt, Chevrolet Bolt EUV"],
+    ["Cadillac XT5, Cadillac XT6, GMC Acadia, Cadillac Lyriq"],
+    ["Chevrolet Express, GMC Savana, Chevrolet Colorado, GMC Canyon"],
+    ["Ford Mustang"],
+    ["Ford Explorer, Lincoln Aviator"],
+    ["Ford F-150"],
+    ["Ford F-150, Ford Transit"],
+    ["Ford Super Duty, Ford Expedition & Expedition Max, Lincoln Navigator & Navigator L"],
+    ["Ford Escape, Lincoln Corsair"],
+    ["Ford Ranger, Ford Bronco"],
+    ["Ford F-650, Ford Super Duty (Chassis Cab) "],
+    ["Jeep Cherokee"],
+    ["Jeep Grand Cherokee, Dodge Durango"],
+    ["Ram 1500"],
+    ["Jeep Wrangler, Jeep Gladiator"],
+    ["Ram 1500, Ram 2500, Ram 3500, Jeep Wagoneer, Jeep Grand Wagoneer"],
+    ["Jeep Grand Cherokee"],
+    ["Tesla Model S, Tesla Model 3, Tesla Model X, Tesla Model Y"],
+    ["Tesla Cybertruck (2023), Tesla Model Y"],
+    ["Toyota Camry, Lexus ES350, Toyota RAV4 (Hybrid only) "],
+    ["Toyota Sienna, Toyota Highlander, Toyota Grand Highlander"],
+    ["Toyota Tundra, Toyota Sequoia"],
+    ["Toyota Corolla"],
+    ["Toyota Corolla Cross, Mazda CX-50"],
+    ["Honda Accord, Acura Integra, Acura TLX"],
+    ["Honda CR-V, Acura RDX, Acura MDX"],
+    ["Honda Odyssey, Honda Passport, Honda Pilot, Honda Ridgeline"],
+    ["Honda Civic, Honda CR-V"],
+    ["Nissan Leaf, Nissan Rogue, Nissan Pathfinder, Nissan Murano, Infiniti QX60"],
+    ["Nissan Altima, Nissan Frontier, Nissan Titan"],
+    ["Mazda CX-50, Toyota Corolla Cross"],
+    ["Subaru Outback, Subaru Legacy, Subaru Impreza, Subaru Ascent"],
+    ["Hyundai Elantra, Hyundai Tucson, Hyundai Santa Fe, Hyundai Santa Cruz"],
+    ["Kia K5, Kia Sportage, Kia Sorento, Kia Telluride"],
+    ["Volkswagen Atlas, Volkswagen Atlas Cross Sport, Volkswagen ID.4"],
+    ["BMW X3, BMW X4, BMW X5, BMW X6, BMW X7"],
+    ["Mercedes-Benz GLE-Class, Mercedes-Benz GLS-Class, Mercedes-Benz EQS SUV"],
+    ["Mercedes-Benz Sprinter"],
+    ["Class 6 & 7 Medium Duty Trucks (GVWR: 16,001 - 33,000 lbs.), Specialized Trucks "],
+    
+    // Canada
+    ["BrightDrop Zevo"],
+    ["Chrysler 300, Dodge Charger, Dodge Challenger"],
+    ["Chrysler Pacifica (Chrysler Pacifica Hybrid), Chrysler Voyager and Chrysler Grand Caravan (Canadian market only)"],
+    ["Ford Edge, Lincoln Nautilus "],
+    ["Chevrolet Heavy Duty Silverado, Chevrolet LD Duty Silverado"],
+    ["Honda Civic, Honda CR-V"],
+    ["Lexus NX, Lexus RX 350, Lexus RX 350h, Lexus RX 500h"],
+    ["Toyota RAV4, Toyota RAV4 Hybrid"],
+
+    // Mexico
+    ["BMW 3 Series Sedan, BMW 2 Series Coupe, BMW M2"],
+    ["Infiniti QX50, Infiniti QX55, Mercedes-Benz GLB"],
+    ["Ford Mustang Mach-E"],
+    ["TBA"],
+    ["Ford Bronco Sport, Ford Maverick"],
+    ["Jeep Compass"],
+    ["Chevrolet Cruze, Chevrolet Sonic, Chevrolet Blazer 2019 and newer (fifth generation, C1 platform)"],
+    ["First-generation Chevrolet Trax, GMC Terrain 2018 and newer, Chevrolet Equinox 2018 and newer"],
+    ["Toyota Tacoma (eight variations)"],
+    ["Toyota Tacoma"],
+    ["Volkswagen Jetta, Taos, Tiguan (long version)"]
+  ];
 
 var map = L.map('map').setView([38.963124, -101.987541], 4.5);
 mapLink =
@@ -111,9 +187,11 @@ L.tileLayer(
 var layer = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
 map.addLayer(layer);
 
+// adding markers to map
 for (var i = 0; i < locations.length; i++) {
   marker = new L.marker([locations[i][1], locations[i][2]])
-    .bindPopup(locations[i][0])
+    .bindTooltip(locations[i][0])   // plant name
+    .bindPopup(cars[i][0])          // vehicle name
     .addTo(map);
 }
 
