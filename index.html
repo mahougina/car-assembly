@@ -111,6 +111,7 @@ L.tileLayer(
 var layer = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
 map.addLayer(layer);
 
+// adding markers to map
 for (var i = 0; i < locations.length; i++) {
   marker = new L.marker([locations[i][1], locations[i][2]])
     .bindPopup(locations[i][0])
