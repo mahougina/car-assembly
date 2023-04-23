@@ -161,17 +161,17 @@
     ["Toyota RAV4, Toyota RAV4 Hybrid"],
 
     // Mexico
-    [""],
-    [""],
-    [""],
-    [""],
-    [""],
-    [""],
-    [""],
-    [""],
-    [""],
-    [""],
-    [""]
+    ["BMW 3 Series Sedan, BMW 2 Series Coupe, BMW M2"],
+    ["Infiniti QX50, Infiniti QX55, Mercedes-Benz GLB"],
+    ["Ford Mustang Mach-E"],
+    ["TBA"],
+    ["Ford Bronco Sport, Ford Maverick"],
+    ["Jeep Compass"],
+    ["Chevrolet Cruze, Chevrolet Sonic, Chevrolet Blazer 2019 and newer (fifth generation, C1 platform)"],
+    ["First-generation Chevrolet Trax, GMC Terrain 2018 and newer, Chevrolet Equinox 2018 and newer"],
+    ["Toyota Tacoma (eight variations)"],
+    ["Toyota Tacoma"],
+    ["Volkswagen Jetta, Taos, Tiguan (long version)"]
   ];
 
 var map = L.map('map').setView([38.963124, -101.987541], 4.5);
@@ -191,7 +191,7 @@ map.addLayer(layer);
 for (var i = 0; i < locations.length; i++) {
   marker = new L.marker([locations[i][1], locations[i][2]])
     .bindTooltip(locations[i][0])   // plant name
-    .bindPopup(cars[i][0])     // vehicle name
+    .bindPopup(cars[i][0])          // vehicle name
     .addTo(map);
 }
 
